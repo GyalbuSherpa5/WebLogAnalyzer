@@ -1,14 +1,24 @@
-<div id="chart">
-  <apx-chart
-    [series]="chartOptions.series"
-    [chart]="chartOptions.chart"
-    [dataLabels]="chartOptions.dataLabels"
-    [title]="chartOptions.title"
-    [colors]="chartOptions.colors"
-  ></apx-chart>
-</div>
+<div class="grid">
 
+  <div class="col-12">
+    <div id="chart">
+      <apx-chart
+        [series]="chartOptions.series"
+        [chart]="chartOptions.chart"
+        [dataLabels]="chartOptions.dataLabels"
+        [title]="chartOptions.title"
+        [colors]="chartOptions.colors"
+      ></apx-chart>
+    </div>
+  </div>
+  <div class="col-12">
+    <div echarts [options]="mapOption"></div>
+  </div>
 
-<div>
-  <p>Data: {{ data | json }}</p>
+  <div class="col-12">
+    <div>
+      <p>Data: {{ data | json }}</p>
+    </div>
+
+  </div>
 </div>
