@@ -11,6 +11,7 @@ import {NgApexchartsModule} from "ng-apexcharts";
 import {NgxEchartsModule} from "ngx-echarts";
 import * as echarts from 'echarts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     JsonPipe,
     NgApexchartsModule,
     NgxEchartsModule.forRoot({ echarts }),
+    CanvasJSAngularChartsModule,
     NgbModule,
   ],
   providers: [LogAnalyzerService],
