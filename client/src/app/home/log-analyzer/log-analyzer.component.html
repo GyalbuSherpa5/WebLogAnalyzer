@@ -16,6 +16,19 @@
   </div>
 
   <div class="col-12">
+    <div id="bar-chart">
+      <apx-chart
+        [series]="barChartOptions.series"
+        [chart]="barChartOptions.chart"
+        [dataLabels]="barChartOptions.dataLabels"
+        [plotOptions]="barChartOptions.plotOptions"
+        [xaxis]="barChartOptions.xaxis"
+      ></apx-chart>
+    </div>
+
+  </div>
+
+  <div class="col-12">
     <div>
       <p>Data: {{ data | json }}</p>
     </div>

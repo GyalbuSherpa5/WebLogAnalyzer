@@ -12,6 +12,8 @@ export type ChartOptions = {
   dataLabels?: any;
   title?: any;
   colors?: any;
+  plotOptions?: any;
+  xaxis?: any;
 };
 
 @Component({
@@ -24,6 +26,7 @@ export class LogAnalyzerComponent {
 
   @ViewChild("chart") chart!: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
+  public barChartOptions!: Partial<ChartOptions>;
 
   data: any;
 
@@ -51,6 +54,7 @@ export class LogAnalyzerComponent {
       (data: any) => {
         this.data = data;
         this.transformDataForChart();
+        this.transformDataForBarChart();
       })
 
     this.mapFunction();
@@ -200,6 +204,38 @@ export class LogAnalyzerComponent {
       ]
     };
 
+  }
+
+  transformDataForBarChart(){
+    const countriesData = Object.entries(this.data.countries)
+      .filter(([, count]) => count as number > 1000); // Filter countries with count > 1000
+
+    const categories = countriesData.map(([country]) => country);
+    const data = countriesData.map(([, count]) => count as number);
+
+    this.barChartOptions = {
+      series: [
+        {
+          name: "basic",
+          data: data
+        }
+      ],
+      chart: {
+        type: "bar",
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: true
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      xaxis: {
+        categories: categories
+      }
+    };
   }
 
 }

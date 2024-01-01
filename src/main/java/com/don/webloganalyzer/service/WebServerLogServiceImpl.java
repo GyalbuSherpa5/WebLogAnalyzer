@@ -57,7 +57,7 @@ public class WebServerLogServiceImpl implements WebServiceLogService {
 
     private static void processLine(String line) {
 
-        log.info("Calculating using thread : " + Thread.currentThread());
+//        log.info("Calculating using thread : " + Thread.currentThread());
 
         String[] columns = line.split(",");
         String day = columns[1].trim();
