@@ -16,7 +16,7 @@ export type ChartOptions = {
   xaxis?: any;
 };
 
-export type PieChartOptions = {
+export type DonutChartOptions = {
   series: any;
   chart: any;
   responsive: any;
@@ -24,6 +24,14 @@ export type PieChartOptions = {
   fill: any;
   legend: any;
   dataLabels: any;
+};
+
+
+export type PieChartOptions = {
+  series: any;
+  chart: any;
+  responsive: any;
+  labels: any;
 };
 
 @Component({
@@ -37,6 +45,7 @@ export class LogAnalyzerComponent {
   @ViewChild("chart") chart!: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
   public barChartOptions!: Partial<ChartOptions>;
+  public donutChartOptions!: Partial<DonutChartOptions>;
   public pieChartOptions!: Partial<PieChartOptions>;
 
   data: any;
@@ -67,6 +76,7 @@ export class LogAnalyzerComponent {
         this.transformDataForChart();
         this.mapFunction();
         this.transformDataForBarChart();
+        this.transformDataForDonutChart();
         this.transformDataForPieChart();
       })
   }
@@ -166,7 +176,7 @@ export class LogAnalyzerComponent {
 
   transformDataForBarChart() {
     const countriesData = Object.entries(this.data.countries)
-      .filter(([, count]) => count as number > 5000);
+      .filter(([, count]) => count as number > 1000);
 
     const categories = countriesData.map(([country]) => country);
     const data = countriesData.map(([, count]) => count as number);
@@ -196,10 +206,10 @@ export class LogAnalyzerComponent {
     };
   }
 
-  transformDataForPieChart() {
+  transformDataForDonutChart() {
     const filteredOperatingSystems = this.filterOutOperatingSystem(this.data.operatingSystems);
 
-    this.pieChartOptions = {
+    this.donutChartOptions = {
       animationEnabled: true,
       title: {
         text: "Session by Operating System"
@@ -210,7 +220,7 @@ export class LogAnalyzerComponent {
         indexLabel: "{name}",
         dataPoints: this.convertDataToDataPoints(filteredOperatingSystems)
       }]
-    } as Partial<PieChartOptions>;
+    } as Partial<DonutChartOptions>;
   }
 
   filterOutOperatingSystem(operatingSystems: { [key: string]: number }): { [key: string]: number } {
@@ -225,6 +235,39 @@ export class LogAnalyzerComponent {
 
   convertDataToDataPoints(data: { [key: string]: number }): { y: number; name: string }[] {
     return Object.keys(data).map(key => ({y: data[key], name: key}));
+  }
+
+  transformDataForPieChart(){
+
+    const filteredData = Object.entries(this.data.browsers)
+      .filter(([key, value]) => key.toLowerCase() !== '"')
+      .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+
+    const labels = Object.keys(filteredData);
+    const series = Object.values(filteredData);
+
+    this.pieChartOptions = {
+      chart: {
+        width: 380,
+        type: "pie",
+        title: "Sessions by Browser"
+      },
+      labels: labels,
+      series: series,
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ],
+    };
   }
 
 }

@@ -27,9 +27,16 @@
     </div>
   </div>
 
-  <div class="col-12">
-    <div>
-      <canvasjs-chart [options]="pieChartOptions" [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>
-    </div>
+  <div class="custom-class">
+      <canvasjs-chart [options]="donutChartOptions" [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>
+      <div>
+        <h1><b>Session By Browser</b></h1>
+        <apx-chart
+          [series]="pieChartOptions.series"
+          [chart]="pieChartOptions.chart"
+          [labels]="pieChartOptions.labels"
+          [responsive]="pieChartOptions.responsive"
+        ></apx-chart>
+      </div>
   </div>
 </div>
