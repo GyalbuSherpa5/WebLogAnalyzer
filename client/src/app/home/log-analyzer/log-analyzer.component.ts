@@ -160,7 +160,7 @@ export class LogAnalyzerComponent {
           data: data
         }
       ]
-    } as EChartsOption;;
+    } as EChartsOption;
 
   }
 
